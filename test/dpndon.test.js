@@ -60,4 +60,16 @@ describe('dpndon', () => {
     });
     return expect(result).to.be.rejectedWith('pkgName is required');
   })
+
+  it('throw error if package is not found', () => {
+    const pkgName = 'ablaksjdfl;avksnba;lsdkfka@ps;dlkjbanl';
+    const dependencyTypes = ['optionalDependencies'];
+    const props = ['name'];
+    const result = dpndon({
+      pkgName: pkgName,
+      dependencyTypes: dependencyTypes,
+      props: props
+    });
+    return expect(result).to.be.rejectedWith(`Package \`${pkgName}\` doesn't exist`);
+  })
 });
