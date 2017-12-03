@@ -31,73 +31,26 @@ describe('PackageJsonLoader', () => {
   };
 
   describe('load', () => {
-    describe('if package name is configured', () => {
-      before(() => {
-        pkgJsonLoader = new PackageJsonLoader('dpndon-core');
-        _fetchPackageJson = sinon.stub(pkgJsonLoader, '_fetchPackageJson');
-      });
-
-      after(() => {
-        _fetchPackageJson.restore();
-      });
-
-      it('try to fetch package.json from npm registry.', () => {
-        _fetchPackageJson.returns(Promise.resolve(packageJson));
-        expect(pkgJsonLoader.load()).to.eventually.deep.equal(packageJson);
-      });
-
-      it('reject when it failed to fetch package.json from npm registry.', () => {
-        const error = new Error();
-        _fetchPackageJson.returns(Promise.reject(error));
-        expect(pkgJsonLoader.load()).to.rejectedWith(error);
-      });
-    });
-
-    describe('if package name is not configured', () => {
-      before(() => {
-        pkgJsonLoader = new PackageJsonLoader();
-        _readPackageJson = sinon.stub(pkgJsonLoader, '_readPackageJson');
-      });
-      
-      after(() => {
-        _readPackageJson.restore();
-      });
-      
-      it('try to read package.json from current working directry.', () => {
-        _readPackageJson.returns(Promise.resolve(packageJson));
-        expect(pkgJsonLoader.load()).to.eventually.deep.equal(packageJson);
-      });
-      
-      it('reject when cant read package.json from current working directry.', () => {
-        const error = new Error();
-        _readPackageJson.returns(Promise.reject(error));
-        expect(pkgJsonLoader.load()).to.rejectedWith(error);
-      });
-    });
-  });
-
-
-  describe('_readPackageJson', () => {
-    let stub;
-
     before(() => {
-      pkgJsonLoader = new PackageJsonLoader();
-      stub = sinon.stub(pkgJsonLoader, '_readPkg');
+      pkgJsonLoader = new PackageJsonLoader('dpndon-core');
+      _fetchPackageJson = sinon.stub(pkgJsonLoader, '_fetchPackageJson');
     });
 
-    it('read package.json from current working directry.', () => {
-      stub.returns(Promise.resolve(packageJson));
-      expect(pkgJsonLoader._readPackageJson()).to.eventually.deep.equal(packageJson);
+    after(() => {
+      _fetchPackageJson.restore();
     });
 
-    it('reject when it cant read package.json from current working directry.', () => {
-      const error = new Error(`ENOENT: no such file or directory, open 'package.json'`);
-      error.code = 'ENOENT';
-
-      stub.returns(Promise.reject(error));
-      
-      expect(pkgJsonLoader._readPackageJson()).to.rejectedWith(error);
+    it('try to fetch package.json from npm registry.', () => {
+      _fetchPackageJson.returns(Promise.resolve(packageJson));
+      expect(pkgJsonLoader.load()).to.eventually.deep.equal(packageJson);
     });
+
+    it('reject when it failed to fetch package.json from npm registry.', () => {
+      const error = new Error();
+      _fetchPackageJson.returns(Promise.reject(error));
+      expect(pkgJsonLoader.load()).to.rejectedWith(error);
+    });
+
   });
 
   describe('_fetchPackageJson', () => {

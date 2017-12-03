@@ -48,4 +48,16 @@ describe('dpndon', () => {
   
     return expect(result).to.eventually.deep.equal({optionalDependencies});
   });
+
+  it('throw error if pkgName is not given', () => {
+    const pkgName = undefined;
+    const dependencyTypes = ['optionalDependencies'];
+    const props = ['name'];
+    const result = dpndon({
+      pkgName: pkgName,
+      dependencyTypes: dependencyTypes,
+      props: props
+    });
+    return expect(result).to.be.rejectedWith('pkgName is required');
+  })
 });
