@@ -28,6 +28,27 @@ describe('dpndon', () => {
     return expect(result).to.eventually.deep.equal({dependencies});
   });
 
+  it('can fetch dependency info with unpkg.com', () => {
+    const pkgName = 'dpndon';
+    const dependencyTypes = ['dependencies'];
+    const props = ['name'];
+    const pkgJson = fs.readFileSync(path.join(__dirname, '..', 'package.json'), 'utf-8');
+    const dependencies =
+        Object.keys(JSON.parse(pkgJson).dependencies)
+          .map(name => {
+            return {name}
+          });
+  
+    const result = dpndon({
+      pkgName: pkgName,
+      dependencyTypes: dependencyTypes,
+      props: props,
+      unpkg: true
+    });
+  
+    return expect(result).to.eventually.deep.equal({dependencies});
+  });
+
   it('can extract optional dependencies names', () => {
     const pkgName = 'dpndon';
     const dependencyTypes = ['optionalDependencies'];
@@ -62,7 +83,7 @@ describe('dpndon', () => {
   })
 
   it('throw error if package is not found', () => {
-    const pkgName = 'ablaksjdfl;avksnba;lsdkfka@ps;dlkjbanl';
+    const pkgName = 'dkjbvdafal';
     const dependencyTypes = ['optionalDependencies'];
     const props = ['name'];
     const result = dpndon({

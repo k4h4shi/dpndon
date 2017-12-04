@@ -9,7 +9,7 @@ const { expect } = chai;
 chai.use(chaiAsPromised);
 
 describe('PackageJsonLoader', () => {
-  let pkgJsonLoader, _readPackageJson, _fetchPackageJson;
+  let pkgJsonLoader, _fetchPackageJson;
 
   const dependencies = {
     "chai": "^4.1.2",
