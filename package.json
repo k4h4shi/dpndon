@@ -1,6 +1,6 @@
 {
   "name": "dpndon",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "dpndon - fetch information of npm modules that the project depend on.",
   "main": "./index.js",
   "author": "Kotaro Takahashi <kotaro.t@k4h4shi.com> (http://k4h4shi.com)",
@@ -11,10 +11,11 @@
     "dependency"
   ],
   "scripts": {
-    "test": "mocha test --recursive"
+    "test": "mocha test --recursive --timeout 5000"
   },
   "dependencies": {
-    "package-json": "^4.0.1"
+    "package-json": "^4.0.1",
+    "unpkg-json": "0.0.1"
   },
   "devDependencies": {
     "mocha": "^4.0.1",
